@@ -30,9 +30,20 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
+# 配置自定义的验证
+AUTHENTICATION_BACKENDS = {
+    'users.views.CustomBackend',
+}
 
 INSTALLED_APPS = [
     'users',
+    'courses',
+    'organization',
+    'operation',
+    'xadmin',
+    'crispy_forms',
+    'captcha',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,6 +98,10 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'root',
         'PORT': '3306',
+        # ????????
+        'OPTIONS': {
+            "init_command": "SET foreign_key_checks = 0;",
+        },
     }
 }
 
@@ -111,19 +126,35 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
+# LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False  # false
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
+
+EMAIL_HOST = "smtp.qq.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "776310072@qq.com"
+EMAIL_HOST_PASSWORD = "bzxvcmkjbuhbbdeg"
+EMAIL_USE_TLS = True
+EMAIL_FROM = "776310072@qq.com"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
