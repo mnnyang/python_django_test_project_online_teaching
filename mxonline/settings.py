@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',
+    'pure_pagination',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,6 +81,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # 把media目录变量注册到HTML
+                'django.core.context_processors.media',
             ],
         },
     },
@@ -156,5 +160,6 @@ EMAIL_HOST_PASSWORD = "bzxvcmkjbuhbbdeg"
 EMAIL_USE_TLS = True
 EMAIL_FROM = "776310072@qq.com"
 
+# 上传文件
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
