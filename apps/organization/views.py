@@ -1,11 +1,54 @@
 # coding=utf-8
+from django.http import HttpResponse
 from django.shortcuts import render
-
 # Create your views here.
 from django.views.generic import View
 from pure_pagination import Paginator, PageNotAnInteger
 
+from operation.models import UserFavorite
+from organization.forms import UserAskForm
 from organization.models import CourseOrg, CityDict
+
+
+class OrgHomeView(View):
+    """
+    机构首页
+    """
+
+    def get(self, request, org_id):
+        current_page = "home"
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        course_org.click_nums += 1
+        course_org.save()
+        has_fav = False
+        if request.user.is_authenticated():
+            if UserFavorite.objects.filter(user=request.user, fav_id=course_org.id, fav_type=2):
+                has_fav = True
+
+        # 取出课程集合 取出有外键的的集合
+        all_courses = course_org.course_set.all()[:3]
+        all_teachers = course_org.teacher_set.all()[:1]
+        return render(request, 'org-detail-homepage.html', {
+            'all_courses': all_courses,
+            'all_teachers': all_teachers,
+            'course_org': course_org,
+            'current_page': current_page,
+            'has_fav': has_fav
+        })
+
+
+class AddUserAskView(View):
+    """
+    用户添加咨询
+    """
+
+    def post(self, request):
+        userask_form = UserAskForm(request.POST)
+        if userask_form.is_valid():
+            user_ask = userask_form.save(commit=True)
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status":"fail", "msg":"添加出错"}', content_type='application/json')
 
 
 class OrgView(View):
