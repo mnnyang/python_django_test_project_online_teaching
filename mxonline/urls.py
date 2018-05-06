@@ -21,7 +21,7 @@ from django.views.static import serve
 
 import xadmin
 from mxonline.settings import MEDIA_ROOT
-from users.views import LoginView, ForgetPwdView, ResetView, ModifyPwdView
+from users.views import LoginView, ForgetPwdView, ResetView, ModifyPwdView, page_not_found
 from users.views import RegisterView, AciveUserView
 
 urlpatterns = [
@@ -38,6 +38,13 @@ urlpatterns = [
     # url(r'^org_list/$', OrgView.as_view(), name="org_list"),
     url(r'^org/', include('organization.urls', namespace='org')),
 
+    # 课程相关url配置
+    url(r'^course/', include('courses.urls', namespace="course")),
+
     # 上传文件
     url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
+
+    # url(r'^static/(?P<path>.*)$',  serve, {"document_root":STATIC_ROOT}),
 ]
+
+handler404 = 'users.views.page_not_found'

@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.hashers import make_password
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 
 # Create your views here.
 
@@ -154,3 +154,9 @@ class ModifyPwdView(View):
         else:
             email = request.POST.get("email", "")
             return render(request, "password_reset.html", {"email": email, "modify_form": modify_form})
+
+
+def page_not_found(request):
+    response = render_to_response('404.html', {})
+    response.status_code = 404
+    return response

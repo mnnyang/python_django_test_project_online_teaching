@@ -1,10 +1,16 @@
 # coding=utf-8
 import xadmin
-from users.models import EmailVerifyRecord, Banner
+from users.models import EmailVerifyRecord, Banner, UserProfile
 from xadmin import views
+from xadmin.plugins.auth import UserAdmin
 
 __author__ = 'xxyangyoulin'
 __date__ = '2018/4/26 下午9:24'
+
+
+# 注册我们自定义的的user表
+class UserProfileAdmin(UserAdmin):
+    pass
 
 
 class BaseSetting(object):
@@ -31,6 +37,7 @@ class BannerAdmin(object):
     list_filter = ['title', 'image', 'url', 'index', 'add_time']
 
 
+# xadmin.site.register(UserProfile, UserProfileAdmin)
 xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordAdmin)
 xadmin.site.register(Banner, BannerAdmin)
 

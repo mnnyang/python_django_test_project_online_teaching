@@ -27,7 +27,7 @@ SECRET_KEY = '-+(f!)@k^l0=uk8+cih76bvd#!3r)98kv)x-16gv)h-6w34m0('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 # 配置自定义的验证
@@ -163,3 +163,5 @@ EMAIL_FROM = "776310072@qq.com"
 # 上传文件
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
